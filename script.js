@@ -93,18 +93,17 @@ function zodiacSign(date) {
 }
 
 function showZodiacSign(people) {
-  return people.map(person => {
-   if (!person.name || !person.birthday) {
-      return `Invalid information, I can't give you your zodiac sign`;
-    }
-
-    const date = new Date(person.birthday);
-    if (typeof person.birthday !== 'string') {
-      return `${person.name} has an invalid birthday`;
-    }
-    const sign = zodiacSign(date);
-    return `${person.name} is ${sign}`;
-  });
+  return people.filter(person => {
+      if (!person.name || !person.birthday || typeof person.birthday !== 'string') {
+        return false;
+      }
+      return true;
+    })
+    .map(person => {
+      const date = new Date(person.birthday);
+      const sign = zodiacSign(date);
+      return `${person.name} is ${sign}`;
+    });
 }
 
 console.log(showZodiacSign(agenda));
